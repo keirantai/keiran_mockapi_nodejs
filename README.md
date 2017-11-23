@@ -4,7 +4,7 @@ This is a mock API to measure the total distance and time between origin locatio
 
 ## Project Structure
 
-This project comoprises in 2 parts. One of them is the API endpoint for submitting geo-locations to find the best path as well as for retrieving the result of the best path. Another part is a worker to continuously check and resolve the best path by using Google MAP API.
+This project comprises in 2 parts. One of them is the API endpoint for submitting geo-locations to find the best path as well as for retrieving the result of the best path. Another part is a worker to continuously check and resolve the best path by using Google MAP API.
 
 Folder / File | Description
 --------------|-------------
