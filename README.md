@@ -12,6 +12,13 @@ Folder / File | Description
 /worker | Worker which is used to resolve the best route in every certain time interval.
 /docker-compose.yml | Docker composer YAML configure file which uses to start the API endpoint and Worker in docker instances. It contains HAProxy and MongoDB for horizontal scaling use.
 
+```
+HAProxy ---> API endpoints (e.g. /route) ---> MongoDB
+                                                ^
+                                                |
+                                             	Worker <---> Google MAP API
+```
+
 ## Google MAP API - Distance Matrix
 
 In order to use this project, API Key from [Google MAP API](https://developers.google.com/maps/documentation/distance-matrix/start) is required. Once retrieved API key, open `docker-compose.yml` to add the API key at the environment version `GOOGLE_MAPS_API_KEY=<API_KEY>`
