@@ -1,0 +1,20 @@
+{
+  "name": "keiran_distance_lookup_worker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "predev": "npm install nodemon && npm install",
+    "dev": "nodemon app.js",
+    "prestart": "npm install",
+    "start": "node app.js",
+    "test": "mocha --timeout 30000"
+  },
+  "author": "Keiran Tai <tkeiran@gmail.com> (https://github.com/keirantai)",
+  "private": true,
+  "dependencies": {
+    "@google/maps": "^0.4.5",
+    "mongoose": "^4.13.4",
+    "nodemon": "^1.12.1"
+  }
+}

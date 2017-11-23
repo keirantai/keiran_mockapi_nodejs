@@ -1,0 +1,17 @@
+version: '2'
+services:
+  db:
+    image: mongo
+    volumes:
+      - ./data/db:/data/db
+  api:
+    image: node:9-onbuild
+    volumes:
+      - ./api:/usr/src/app
+    environment:
+      - NODE_ENV=production
+      - MONGODB=mongodb://db/routes
+    ports:
+      - 3000:3000
+    links:
+      - db
