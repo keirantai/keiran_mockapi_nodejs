@@ -2,6 +2,16 @@
 
 This is a mock API to measure the total distance and time between origin location and destination(s). It used Google MAP API to find the distance and time.
 
+## Project Structure
+
+This project comoprises in 2 parts. One of them is the API endpoint for submitting geo-locations to find the best path as well as for retrieving the result of the best path. Another part is a worker to continuously check and resolve the best path by using Google MAP API.
+
+Folder / File | Description
+--------------|-------------
+/api | API endpoint to submit or retrieve the best route. It's using HAPI framework.
+/worker | Worker which is used to resolve the best route in every certain time interval.
+/docker-compose.yml | Docker composer YAML configure file which uses to start the API endpoint and Worker in docker instances. It contains HAProxy and MongoDB for horizontal scaling use.
+
 ## Google MAP API - Distance Matrix
 
 In order to use this project, API Key from [Google MAP API](https://developers.google.com/maps/documentation/distance-matrix/start) is required. Once retrieved API key, open `docker-compose.yml` to add the API key at the environment version `GOOGLE_MAPS_API_KEY=<API_KEY>`
