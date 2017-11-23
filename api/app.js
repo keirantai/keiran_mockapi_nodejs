@@ -8,7 +8,12 @@ const server = new Hapi.Server({port: SERVER_PORT});
 
 const Route = require('./models/route');
 
+/**
+ * Listen onRequest event to connect establishing MongoDB connection
+ * on customer requests
+ */
 server.ext('onRequest', async (request, h) => {
+  console.log('[Info] Path: ' + request.url.path);
   try {
     request.db = await new Promise((resolve, reject) => {
       var db = mongoose.connection;
@@ -26,6 +31,9 @@ server.ext('onRequest', async (request, h) => {
   }
 });
 
+/**
+ * This is a demo message of the root URI: /
+ */
 server.route({
   method: 'GET',
   path: '/',
@@ -34,6 +42,11 @@ server.route({
   }
 });
 
+/**
+ * This is a mockapi endpoint which consists of:
+ * - POST /route
+ * - GET /route/<token>
+ */
 server.route([
   {
     method: 'POST',

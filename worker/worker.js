@@ -10,10 +10,12 @@ const Route = require('./models/route');
 
 class Worker {
 
+	/** Worker constructor to initialize setup */
 	constructor() {
 		this.init();
 	}
 
+	/** Establish databaes connection when initializing */
 	init() {
 		this.connectDb();
 	}
@@ -33,6 +35,7 @@ class Worker {
     return this.db;
 	}
 
+	/** Retrieve a task from database to lookup the total distance and time */
 	async processTask() {
 		console.log('[Info] Find and process a next task.');
 		try {
@@ -76,6 +79,7 @@ class Worker {
 		}
 	}
 
+	/** Find total distance and time by an array of geolocation. */
 	async findDistances(path) {
 		console.log('[Info] Finding distance and time from Google Map API.');
 		try {
@@ -90,7 +94,6 @@ class Worker {
 				mode: 'driving'
 			};
 			var result = await googleMapClient.distanceMatrix(query).asPromise();
-			console.log('result', result.json.rows);
 			return result.json;
 		} catch (err) {
 			console.error(err);
@@ -99,11 +102,13 @@ class Worker {
 		}
 	}
 
+	/** sleep ? ms for each process */
 	timeout(ms) {
 		console.log(`[Info] Sleep for ${ms} ms`);
 		return new Promise(res => setTimeout(res, ms));
 	}
 
+	/** entry point of this Worker; Use to process the pending task one-by-one. */
 	async run() {
 		while(true) {
 			await this.processTask();
