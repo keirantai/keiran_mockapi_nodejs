@@ -19,6 +19,19 @@ HAProxy ---> API endpoints (e.g. /route) ---> MongoDB
                                              	Worker <---> Google MAP API
 ```
 
+## Environment Variables
+
+In this project, there are few environment variables that helps to configure the system behaviours.
+
+Used for | Variable | Description
+---------------------------------
+api | MONGODB | MongoDB connection string
+api | NODE_PORT | Listening port of the API endpoint
+worker | TIME_INTERVAL | Time to wait before next process (in ms.)
+worker | MEASURED_BY_DISTANCE | Whether determine the shortest path by distance or time. true is by distance
+worker | FIND_BEST_ROUTE | Whether find the best route by shortest path or obey the request sequence to find the shortest path. false is by requested sequence
+worker | GOOGLE_MAPS_API_KEY | Google Map API key to find the shortest path
+
 ## Google MAP API - Distance Matrix
 
 In order to use this project, API Key from [Google MAP API](https://developers.google.com/maps/documentation/distance-matrix/start) is required. Once retrieved API key, open `docker-compose.yml` to add the API key at the environment version `GOOGLE_MAPS_API_KEY=<API_KEY>`

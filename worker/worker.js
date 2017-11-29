@@ -12,7 +12,8 @@ class Worker {
 
 	/** Worker constructor to initialize setup */
 	constructor() {
-		this.MEASURED_BY_DISTANCE = true;
+		this.MEASURED_BY_DISTANCE = (process.env.MEASURED_BY_DISTANCE || 'true')=='true';
+		this.FIND_BEST_ROUTE = (process.env.FIND_BEST_ROUTE || 'false')=='true';
 		this.init();
 	}
 
@@ -59,19 +60,26 @@ class Worker {
 					// console.log('The best spot:', best);
 					var row = distances.rows[best];
 					var lowestIdx = 0, lastLowest = null;
-					// loop through all distance and find the shortest distance or time
-					for (var e in row.elements) {
-						var el = row.elements[e];
-						var measurement = this.MEASURED_BY_DISTANCE ? el.distance.value : el.duration.value;
-						// console.log('measurement', measurement);
-						if (lastLowest == null || lastLowest > measurement) {
-							// avoid inspecting same location more than one time
-							if (inspected.indexOf(parseInt(e)) > -1) {
-								continue;
+					// if find the best route
+					if (this.FIND_BEST_ROUTE) {
+						console.log('[Info] Finding the best route in a shortest distance or time.');
+						// loop through all distance and find the shortest distance or time
+						for (var e in row.elements) {
+							var el = row.elements[e];
+							var measurement = this.MEASURED_BY_DISTANCE ? el.distance.value : el.duration.value;
+							// console.log('measurement', measurement);
+							if (lastLowest == null || lastLowest > measurement) {
+								// avoid inspecting same location more than one time
+								if (inspected.indexOf(parseInt(e)) > -1) {
+									continue;
+								}
+								lastLowest = measurement;
+								lowestIdx = parseInt(e);
 							}
-							lastLowest = measurement;
-							lowestIdx = parseInt(e);
 						}
+					} else { // if find the shortest distance by complying requested path sequence.
+						console.log('[Info] Finding the shortest distance or time.');
+						lowestIdx = best;
 					}
 					// console.log('lowest', lowestIdx, lastLowest);
 					var lowestElement = row.elements[lowestIdx];
@@ -113,9 +121,9 @@ class Worker {
 				destinations: spots.join('|'),
 				mode: 'driving'
 			};
-			console.log('query', JSON.stringify(query));
+			// console.log('query', JSON.stringify(query));
 			var result = await googleMapClient.distanceMatrix(query).asPromise();
-			console.log('result', result.json);
+			// console.log('result', result.json);
 			return result.json;
 		} catch (err) {
 			console.error(err);

@@ -14,6 +14,8 @@ services:
     environment:
       - MONGODB=mongodb://db/routes
       - TIME_INTERVAL=5000
+      - MEASURED_BY_DISTANCE=true # if true, the shortest path is measured by distance. Else it will be measured by time.
+      - FIND_BEST_ROUTE=false # if true, the path is finding by the best distance / time. Else it will find the shortest distance / time in the same sequence of requested locations.
       - GOOGLE_MAPS_API_KEY=
     links:
       - db
