@@ -2,8 +2,8 @@
   "name": "keiran_mockapi_test",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
+    "pretest": "npm install",
     "test": "mocha --timeout 3000"
   },
   "author": "Keiran Tai <tkeiran@gmail.com> (https://github.com/keirantai)",
