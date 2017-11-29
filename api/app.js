@@ -7,6 +7,7 @@ const CONNECTION_STRING = process.env.MONGODB || 3000;
 const server = new Hapi.Server({port: SERVER_PORT});
 
 const Route = require('./models/route');
+const RoutePostRequest = require('./validators/route-post-request');
 
 /**
  * Listen onRequest event to connect establishing MongoDB connection
@@ -52,8 +53,8 @@ server.route([
     method: 'POST',
     path: '/route',
     handler: async (request) => {
-      var data = request.payload;
       try {
+        var data = RoutePostRequest.validate(request.payload);
         var route = await Route.create({ path: data });
         return { token: route._id };
       } catch (err) {
@@ -65,9 +66,17 @@ server.route([
     method: 'GET',
     path: '/route/{token}',
     handler: async (request) => {
+      const ERROR_INVALID_TOKEN = 'Token is not found.';
       try {
         var result = {};
-        var route = await Route.findById(mongoose.Types.ObjectId(request.params.token)).exec();
+        try {
+          var route = await Route.findById(mongoose.Types.ObjectId(request.params.token)).exec();
+        } catch (err) {
+          throw new Error(ERROR_INVALID_TOKEN);
+        }
+        if (!route) {
+          throw new Error(ERROR_INVALID_TOKEN);
+        }
         switch (route.status) {
           case 'failure':
             result.status = route.status;
