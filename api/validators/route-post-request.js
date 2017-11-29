@@ -6,15 +6,10 @@ class RoutePostRequest {
 	 * @return mixed       The original request data
 	 * @throws {Error} If request data is invalid
 	 */
-	static validate(raw) {
+	static validate(data) {
 		const ERROR_INVALID_STRUCTURE = 'Invalid data structure, it must be an array of locations.';
 		const ERROR_INVALID_LOCATION = 'Invalid location, it must be an array and contains latitude and longitude e.g. ["22.372081", "114.107877"]';
 		
-		try {
-			var data = JSON.parse(raw);
-		} catch (err) {
-			throw new Error(ERROR_INVALID_STRUCTURE);
-		}
 		if (!Array.isArray(data)) {
 			throw new Error(ERROR_INVALID_STRUCTURE);
 		}
