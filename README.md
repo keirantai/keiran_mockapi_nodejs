@@ -24,7 +24,7 @@ HAProxy ---> API endpoints (e.g. /route) ---> MongoDB
 In this project, there are few environment variables that helps to configure the system behaviours.
 
 Used for | Variable | Description
----------------------------------
+---------|----------|-------------
 api | MONGODB | MongoDB connection string
 api | NODE_PORT | Listening port of the API endpoint
 worker | TIME_INTERVAL | Time to wait before next process (in ms.)
