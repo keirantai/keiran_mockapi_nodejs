@@ -61,3 +61,16 @@ docker-compose up --scale api=3
 # to scale worker to resolve total distance
 docker-compose up --scale worker=3
 ```
+
+## How to Test
+
+This project includes a test case. You may need to start the docker instances before test.
+
+```
+# Find the test case in /test folder
+cd test
+# Run test script
+npm test api
+```
+
+P.S. The test case assumes your API endpoint is listening the default 80 port and hosted by localhost, i.e. http://localhost/
